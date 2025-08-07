@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia Premium - Seu novo estilo começa aqui</title>
+    <!-- Fontes do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ============================ */
+        /*   ESTILO VISUAL COMPLETO     */
+        /* ============================ */
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: #f6f5ef; color: #0e0e0e; line-height: 1.4; overflow-x: hidden; }
+        
+        /* --- Seções e Containers --- */
+        .hero-section {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 95vh; padding: 120px 48px 80px; text-align: center; position: relative;
+        }
+        .page-section { padding: 80px 48px; }
+        .content-container { max-width: 1200px; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 32px; }
+        
+        /* --- Elementos de Conteúdo (Hero) --- */
+        .social-proof { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #5f5f5f; margin-bottom: 16px; }
+        .profile-images { display: flex; align-items: center; }
+        .profile-image { width: 28px; height: 28px; border-radius: 50%; border: 3px solid #f6f5ef; margin-left: -12px; transition: transform 0.3s ease; }
+        .profile-image:first-child { margin-left: 0; }
+        .profile-image:hover { transform: scale(1.1); z-index: 10; }
+        .main-headline { font-size: 80px; font-weight: 500; color: #0e0e0e; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 20px; }
+        .highlight-text { color: #f06a42; position: relative; }
+        .highlight-text::after {
+            content: ''; position: absolute; bottom: -8px; left: 0; width: 0; height: 4px; background-color: #f06a42;
+            animation: expandWidth 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards 1.2s;
+        }
+        .sub-headline { font-size: 20px; font-weight: 400; color: #5f5f5f; max-width: 600px; margin-bottom: 32px; }
+        .cta-button {
+            background-color: #f06a42; color: white; border: none; border-radius: 40px; padding: 16px 32px; font-size: 18px;
+            font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: all 0.3s ease; position: relative;
+        }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(240, 106, 66, 0.3); }
+        .cta-button:active { transform: scale(0.97); }
+
+        /* --- Tooltip --- */
+        .cta-tooltip {
+            position: absolute; left: 50%; bottom: 125%; transform: translateX(-50%) scale(0.95); background-color: #2c2c2c; color: #f6f5ef; 
+            padding: 10px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            opacity: 0; pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease;
+            z-index: 100; white-space: nowrap; will-change: transform, opacity;
+        }
+        .cta-tooltip::after {
+            content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border-width: 5px; border-style: solid;
+            border-color: #2c2c2c transparent transparent transparent;
+        }
+        .cta-button.show-tooltip .cta-tooltip { opacity: 1; transform: translateX(-50%) scale(1); }
+        
+        /* --- Seções (Hero Images e Barbeiros) --- */
+        .hero-images { display: flex; gap: 20px; max-width: 1200px; width: 100%; justify-content: center; align-items: center; margin-top: 48px; }
+        .hero-image-container {
+            flex: 1; max-width: 320px; aspect-ratio: 1 / 1.2; border-radius: 24px; overflow: hidden; position: relative;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        .hero-image-container:nth-child(1) { transform: rotate(-4deg); }
+        .hero-image-container:nth-child(2) { transform: rotate(2deg); }
+        .hero-image-container:nth-child(3) { transform: rotate(5deg); }
+        .hero-image-container:hover { transform: rotate(0deg) scale(1.05); z-index: 10; }
+        .hero-image-container img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .section-header { display: flex; flex-direction: column; align-items: center; gap: 24px; margin-bottom: 60px; text-align: center; }
+        .section-label { font-size: 14px; font-weight: 500; color: #0099ff; letter-spacing: 0.1em; text-transform: uppercase; }
+        .section-title { font-size: 48px; font-weight: 500; color: #0e0e0e; letter-spacing: -0.03em; max-width: 800px; }
+        
+        .barbers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; width: 100%; }
+        .barber-card {
+            position: relative; aspect-ratio: 1 / 1.25; border-radius: 28px; overflow: hidden;
+            transition: transform 0.3s ease; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .barber-card:hover { transform: translateY(-10px); }
+        .barber-image { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: filter 0.4s ease, transform 0.4s ease; }
+        .barber-card:hover .barber-image { filter: grayscale(0%); transform: scale(1.05); }
+        .barber-overlay {
+            position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+            padding: 40px 25px 25px; color: white; text-align: left;
+        }
+        .barber-name { font-size: 24px; font-weight: 500; margin-bottom: 4px; }
+        .barber-specialty { font-size: 16px; font-weight: 400; color: #dddddd; opacity: 0.9; }
+
+        /* --- SEÇÃO DE LOCALIZAÇÃO COM MAPA --- */
+        #location-section { background-color: #ffffff; }
+        .location-subtitle { color: #5f5f5f; font-size: 18px; max-width: 700px; line-height: 1.5; margin-top: -30px; }
+        .map-container {
+            width: 100%; margin-bottom: 50px;
+            border-radius: 28px; overflow: hidden; position: relative; /* Adicionado para o botão */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        .map-container iframe { display: block; width: 100%; height: 450px; border: 0; filter: grayscale(15%) contrast(95%); }
+        /* NOVO BOTÃO DE AGENDAR NO MAPA */
+        .map-schedule-btn {
+            position: absolute; bottom: 25px; right: 25px; z-index: 10;
+            background-color: #f06a42; color: white; text-decoration: none;
+            padding: 14px 22px; border-radius: 40px; font-weight: 600;
+            display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease;
+        }
+        .map-schedule-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.25); }
+        .map-schedule-btn span { font-size: 20px; }
+
+        .action-prompt { font-size: 24px; font-weight: 500; color: #0e0e0e; }
+        .location-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; width: 100%; }
+        .action-card { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; }
+        .action-button {
+            display: inline-flex; align-items: center; justify-content: center; width: 100%;
+            padding: 16px 20px; background-color: #fff; color: #333;
+            border: 1px solid #ddd; border-radius: 12px; text-decoration: none;
+            font-size: 16px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease-out;
+        }
+        .action-button:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); border-color: #f06a42; color: #f06a42; }
+        .action-button svg { width: 22px; height: 22px; margin-right: 12px; flex-shrink: 0; }
+        .action-card small { font-size: 13px; color: #777; max-width: 220px; }
+        
+        /* --- Botão Flutuante e Modal --- */
+        .floating-appointment-btn { display: none; /* Desativado em favor do botão no mapa */ }
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(14, 14, 14, 0.5);
+            display: none; align-items: center; justify-content: center; z-index: 2000; backdrop-filter: blur(8px);
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: #ffffff; color: #0e0e0e; border-radius: 20px; padding: 40px; max-width: 500px;
+            width: 90%; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .modal-close { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #888; font-size: 28px; cursor: pointer; transition: color 0.3s ease; }
+        .modal-close:hover { color: #f06a42; }
+        .modal-title { font-size: 28px; font-weight: 600; margin-bottom: 30px; text-align: center; }
+        .form-group label { display: block; font-size: 14px; font-weight: 500; color: #5f5f5f; margin-bottom: 8px; }
+        .form-group input, .form-group select { width: 100%; padding: 12px 16px; border: 1px solid #ccc; border-radius: 8px; background: #f6f5ef; color: #0e0e0e; font-size: 16px; transition: all 0.3s ease; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #f06a42; box-shadow: 0 0 0 3px rgba(240, 106, 66, 0.2); }
+        .submit-btn { width: 100%; background: #f06a42; color: white; border: none; border-radius: 8px; padding: 16px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 10px; }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(240, 106, 66, 0.3); }
+
+        /* --- Animações e Responsividade --- */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes expandWidth { from { width: 0; } to { width: 100%; } }
+        .animate { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .animate.visible { opacity: 1; transform: translateY(0); }
+        @media (max-width: 992px) { .main-headline, .section-title { font-size: 64px; } }
+        @media (max-width: 768px) {
+            .hero-section { padding: 100px 16px 80px; min-height: 90vh; }
+            .page-section, .hero-section { padding-left: 16px; padding-right: 16px; }
+            .main-headline { font-size: 48px; }
+            .section-title { font-size: 38px; }
+            .hero-images { flex-direction: column; gap: 20px; }
+            .hero-image-container, .hero-image-container:nth-child(n) { transform: rotate(0deg); max-width: 80%; }
+            .cta-tooltip { white-space: normal; text-align: center; max-width: 80vw; }
+            .barbers-grid { grid-template-columns: 1fr; }
+            .map-schedule-btn { font-size: 14px; padding: 12px 18px; bottom: 15px; right: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero-section">
+        <div class="content-container">
+            <div class="social-proof animate"><div class="profile-images"><img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Cliente 1" class="profile-image"><img src="https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Cliente 2" class="profile-image"><img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Cliente 3" class="profile-image"></div><span>+500 clientes satisfeitos</span></div>
+            <h1 class="main-headline animate">Seu novo estilo<br><span class="highlight-text">começa aqui</span></h1>
+            <p class="sub-headline animate">Barbearia premium com os melhores profissionais da cidade. Cortes modernos, barbas perfeitas e atendimento de primeira.</p>
+            <button class="cta-button animate" id="ctaScheduleBtn" type="button">Agende seu horário →<div class="cta-tooltip" id="ctaTooltip">Nosso plano de assinatura vale a pena. Clique para saber mais!</div></button>
+            <div class="hero-images animate"><div class="hero-image-container"><img src="https://images.pexels.com/photos/3998427/pexels-photo-3998427.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Ambiente da barbearia"></div><div class="hero-image-container"><img src="https://images.pexels.com/photos/3992864/pexels-photo-3992864.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Barbeiro em ação"></div><div class="hero-image-container"><img src="https://images.pexels.com/photos/3160980/pexels-photo-3160980.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Corte de cabelo finalizado"></div></div>
+        </div>
+    </section>
+
+    <section class="page-section">
+        <div class="content-container">
+            <div class="section-header animate"><h2 class="section-title">Conheça os profissionais que vão cuidar do seu estilo</h2></div>
+            <div class="barbers-grid">
+                <div class="barber-card animate"><img src="https://images.pexels.com/photos/3778680/pexels-photo-3778680.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Retrato de João Silva" class="barber-image"><div class="barber-overlay"><div class="barber-name">João Silva</div><div class="barber-specialty">@instagram</div></div></div>
+                <div class="barber-card animate"><img src="https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Retrato de Carlos Santos" class="barber-image"><div class="barber-overlay"><div class="barber-name">Carlos Santos</div><div class="barber-specialty">@instagram</div></div></div>
+                <div class="barber-card animate"><img src="https://images.pexels.com/photos/2033446/pexels-photo-2033446.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Retrato de Pedro Costa" class="barber-image"><div class="barber-overlay"><div class="barber-name">Pedro Costa</div><div class="barber-specialty">@instagram</div></div></div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="location-section" class="page-section">
+        <div class="content-container">
+            <div class="section-header animate">
+                <h2 class="section-title">Você está a apenas 6 minutos da sua nova experiência</h2>
+                <p class="location-subtitle">Chegar até a Barbearia Ducorte nunca foi tão fácil. Você está a apenas 6 minutos de distância de um atendimento premium, com estilo e atitude.</p>
+            </div>
+            
+            <div class="map-container animate">
+                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3537.9860787046614!2d-48.63969592531168!3d-27.531891619357562!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x952749bde928ca4b%3A0x2a49f75e763de151!2sBarbearia%20BC%20Ducorte%20%7C%20Bigua%C3%A7u%20-%20Barba%2C%20Cabelo%2C%20Bigode%2C%20Luzes%2C%20Platinado%2C%20Pigmenta%C3%A7%C3%A3o%2C%20Depila%C3%A7%C3%A3o.!5e0!3m2!1spt-BR!2sbr!4v1754575228610!5m2!1spt-BR!2sbr" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                 <a href="#" onclick="openModal(); return false;" class="map-schedule-btn"><span>✂️</span> Agendar</a>
+            </div>
+
+            <div class="content-container animate">
+                <h3 class="action-prompt">Como você quer chegar?</h3>
+                <div class="location-actions">
+                    <div class="action-card"><a href="https://maps.app.goo.gl/v6ZXPssCTvXGPPGr7" target="_blank" class="action-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span>Abrir no Google Maps</span></a><small>Basta clicar e você será redirecionado para a rota!</small></div>
+                    <div class="action-card"><a href="https://m.uber.com/looking?drop%5B0%5D=%7B%22addressLine1%22%3A%22Bc%20Ducorte%22%2C%22addressLine2%22%3A%22Rua%20Jo%C3%A3o%20Luiz%20Duarte%2C%20840%20-%20Bom%20Viver%20-%20Bigua%C3%A7u%20-%20SC%2C%2088160-640%22%2C%22id%22%3A%222d35b7ff-092c-2e5e-b2e7-6bb39285319a%22%2C%22source%22%3A%22SEARCH%22%2C%22latitude%22%3A-27.5320045%2C%22longitude%22%3A-48.6372049%2C%22provider%22%3A%22uber_places%22%7D" target="_blank" class="action-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="5" fill="#FFF"/></svg><span>Chamar no Uber</span></a><small>Um clique e o destino já estará no app. Sem digitar nada.</small></div>
+                    <div class="action-card"><a href="intent://open?drop_lat=-27.5320045&drop_lng=-48.6372049&drop_address=Bc%20Ducorte#Intent;scheme=app;package=com.taxis99;end;" class="action-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.316 2.012a.8.8 0 0 0-.875-.126C6.918 3.428 5.02 8.423 6.56 12.948c1.14 3.345 3.991 5.768 7.375 6.435.133.027.266.046.398.058h.099c.148 0 .295-.018.44-.055 4.542-1.076 7.359-5.462 6.284-9.998-1.054-4.453-5.321-7.31-9.782-6.666a.8.8 0 0 1-.059.001zM8.482 6.468a.784.784 0 0 1 .803-.246l3.54 5.309c.178.266.096.625-.17.801l-1.353.903c-.266.177-.625.096-.801-.17l-3.541-5.309a.78.78 0 0 1 .522-1.298zm8.173.117a.654.654 0 0 1 .654.654v4.577a.654.654 0 1 1-1.308 0V7.24a.654.654 0 0 1 .654-.655z"/></svg><span>Ir com 99 Táxi</span></a><small>Clique e vá direto com o endereço já preenchido.</small></div>
+                    <div class="action-card"><button id="copyAddressBtn" class="action-button"><svg id="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span id="copy-text">Copiar Endereço</span></button><small>Preferindo colar em outro app? Copie com um clique.</small></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="appointmentModal">
+        <div class="modal"><button class="modal-close" onclick="closeModal()">&times;</button><h3 class="modal-title">Agende seu Horário</h3><form id="appointmentForm"><div class="form-group"><label for="name">Nome completo</label><input type="text" id="name" name="name" placeholder="Digite seu nome" required></div><div class="form-group"><label for="phone">Telefone</label><input type="tel" id="phone" name="phone" placeholder="(11) 99999-9999" required></div><div class="form-group"><label for="date">Data</label><input type="date" id="date" name="date" required></div><div class="form-group"><label for="time">Horário</label><select id="time" name="time" required><option value="">Selecione</option><option value="09:00">09:00</option><option value="10:00">10:00</option></select></div><div class="form-group"><label for="barber">Barbeiro</label><select id="barber" name="barber" required><option value="">Escolha</option><option value="joao">João Silva</option><option value="carlos">Carlos Santos</option></select></div><button type="submit" class="submit-btn">Confirmar Agendamento</button></form></div>
+    </div>
+
+    <script>
+        const modalOverlay = document.getElementById('appointmentModal');
+        const appointmentForm = document.getElementById('appointmentForm');
+        const dateInput = document.getElementById('date');
+        function openModal() { if (modalOverlay) modalOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeModal() { if (modalOverlay) modalOverlay.classList.remove('active'); document.body.style.overflow = 'auto'; }
+        if (modalOverlay) { modalOverlay.addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal(); }); }
+        if (appointmentForm) { appointmentForm.addEventListener('submit', (e) => { e.preventDefault(); alert('Agendado com sucesso! (Isto é uma demonstração)'); closeModal(); e.target.reset(); }); }
+        if (dateInput) { dateInput.min = new Date().toISOString().split('T')[0]; }
+
+        function revealOnScroll() {
+            document.querySelectorAll('.animate').forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight * 0.95) { el.classList.add('visible'); } });
+        }
+        window.addEventListener('scroll', revealOnScroll);
+        document.addEventListener('DOMContentLoaded', revealOnScroll);
+
+        (function() {
+            const ctaButton = document.getElementById('ctaScheduleBtn');
+            if (!ctaButton) return;
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            const showTooltip = () => ctaButton.classList.add('show-tooltip');
+            const hideTooltip = () => ctaButton.classList.remove('show-tooltip');
+            ctaButton.addEventListener('click', (e) => {
+                if (isTouchDevice && !ctaButton.classList.contains('show-tooltip')) {
+                    e.preventDefault(); e.stopPropagation(); showTooltip();
+                    setTimeout(() => { 
+                        const hideOnClickOutside = (event) => { if (!ctaButton.contains(event.target)) { hideTooltip(); document.removeEventListener('click', hideOnClickOutside, true); } };
+                        document.addEventListener('click', hideOnClickOutside, { once: true, capture: true });
+                    }, 0);
+                } else { hideTooltip(); openModal(); }
+            });
+            if (!isTouchDevice) { ctaButton.addEventListener('mouseenter', showTooltip); ctaButton.addEventListener('mouseleave', hideTooltip); }
+        })();
+
+        (function() {
+            const copyBtn = document.getElementById('copyAddressBtn');
+            if(!copyBtn) return;
+            const copyTextSpan = document.getElementById('copy-text');
+            const address = 'Bc Ducorte, Rua João Luiz Duarte, 840 - Bom Viver, Biguaçu - SC';
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(address).then(() => {
+                    const originalText = copyTextSpan.textContent;
+                    copyTextSpan.textContent = 'Endereço Copiado!';
+                    copyBtn.style.borderColor = '#1ED760'; copyBtn.style.color = '#1ED760';
+                    setTimeout(() => { copyTextSpan.textContent = originalText; copyBtn.style.borderColor = ''; copyBtn.style.color = ''; }, 2500);
+                }).catch(err => { console.error('Falha ao copiar endereço: ', err); });
+            });
+        })();
+    </script>
+</body>
+</html>
